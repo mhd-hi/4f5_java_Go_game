@@ -1,0 +1,10 @@
+plugins {
+	id 'local-4f5-plugin'
+}
+
+task parametres (type:JavaExec) {
+	dependsOn 'classes'
+	main = 'GO_APP.pages.parametres.PageParametres'
+	classpath = sourceSets.main.runtimeClasspath
+	jvmArgs('-Dfile.encoding=UTF-8', '-Duser.language=fr')
+}
