@@ -5,7 +5,7 @@ import ntro.debogage.DoitEtre;
 import ntro.debogage.J;
 import ntro.mvc.modeles.Modele;
 
-public class Parametres extends Modele<ParametresLectureSeule> implements ParametresLectureSeule{
+public class Parametres extends Modele<ParametresLectureSeule> implements ParametresLectureSeule {
 
 	int[] taille = {9, 13, 19};
 	
