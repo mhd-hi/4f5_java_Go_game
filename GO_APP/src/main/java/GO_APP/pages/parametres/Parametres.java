@@ -9,7 +9,7 @@ import ntro.mvc.modeles.Modele;
 
 public class Parametres extends Modele<ParametresLectureSeule> implements ParametresLectureSeule {
 
-
+	private Couleur quiEsTu;
 	private TailleTable tailleTable;
 	
 
@@ -17,8 +17,7 @@ public class Parametres extends Modele<ParametresLectureSeule> implements Parame
 	public void apresCreation() {
 		J.appel(this);
 		
-		//quiEsTu = Couleur.BLANC;
-		
+		quiEsTu = Couleur.BLANC;
 		tailleTable = TailleTable.TABLE_MOYENNE;
 	}
 	
@@ -28,10 +27,11 @@ public class Parametres extends Modele<ParametresLectureSeule> implements Parame
 		J.appel(this);
 		
 		DoitEtre.nonNul(tailleTable);
+		DoitEtre.nonNul(quiEsTu);
 	}
 	
 	
-	/*@Override
+	@Override
 	public Couleur getQuiEsTu() {
 		J.appel(this);
 		
@@ -43,13 +43,13 @@ public class Parametres extends Modele<ParametresLectureSeule> implements Parame
 		J.appel(this);
 		
 		this.quiEsTu = joueurQuiEsTu;
-	}*/
+	}
 	
 	
-	public void choisirTailleGrille(TailleTable tailleGrille) {
+	public void choisirTailleTable(TailleTable tailleTable) {
 		J.appel(this);
 		
-		this.tailleTable = tailleGrille;
+		this.tailleTable = tailleTable;
 	}
 	
 	

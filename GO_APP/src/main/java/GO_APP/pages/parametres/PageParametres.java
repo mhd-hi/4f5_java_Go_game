@@ -1,7 +1,5 @@
 package GO_APP.pages.parametres;
 
-import java.util.Random;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,17 +13,14 @@ import ntro.javafx.Initialisateur;
 import ntro.mvc.controleurs.FabriqueControleur;
 import ntro.mvc.modeles.EntrepotDeModeles;
 import ntro.systeme.Systeme;
-
-
+import java.util.Random;
 import static Go.Constantes.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class PageParametres extends Application {
-	
-	//public static final String[] IDS_MODELES_TESTS = {"test01","test02","test03"};
-	
+//public static final String[] IDS_MODELES_TESTS = {"test01","test02","test03"};
 	static {
 		Initialisateur.initialiser();
 		
@@ -50,6 +45,7 @@ public class PageParametres extends Application {
 		
 		Parametres parametres = EntrepotDeModeles.creerModele(Parametres.class, ID_MODELE_PAR_DEFAUT);
 		
+		//??
 		String idModeleTest = IDS_MODELES_TESTS[alea.nextInt(IDS_MODELES_TESTS.length)];
 		//Parametres parametres = EntrepotDeModeles.obtenirModele(Parametres.class, idModeleTest);
 		

@@ -1,5 +1,26 @@
-package commandes.choisir_Taille_Table;
+package GO_APP.commandes.choisir_Taille_Table;
 
-public class ChoisirTailleTable {
+import Go.enumerations.TailleTable;
+import ntro.commandes.Commande;
+import ntro.debogage.J;
 
+
+public class ChoisirTailleTable extends Commande<ChoisirTailleTablePourEnvoi, ChoisirTailleTableRecue> 
+implements ChoisirTailleTablePourEnvoi, ChoisirTailleTableRecue {
+
+	private TailleTable tailleTable;
+
+	@Override
+	public TailleTable getTailleTable() {
+		J.appel(this);
+		
+		return tailleTable;
+	}
+
+	@Override
+	public void setTailleTable(TailleTable taille) {
+		J.appel(this);
+		
+		this.tailleTable = taille;
+	}
 }

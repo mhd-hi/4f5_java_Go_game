@@ -34,6 +34,7 @@ public class   AfficheurParametres
 		J.appel(this);
 
 		vue.afficherTailleTable(modeleLectureSeule.getTailleTable());
+		vue.afficherQuiEsTu(modeleLectureSeule.getQuiEsTu());
 	}
 
 }

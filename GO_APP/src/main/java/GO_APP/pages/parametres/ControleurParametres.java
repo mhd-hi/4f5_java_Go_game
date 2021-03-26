@@ -18,8 +18,16 @@
 
 package GO_APP.pages.parametres;
 
+import ntro.debogage.DoitEtre;
 import ntro.debogage.J;
 import ntro.mvc.controleurs.ControleurModeleVue;
+import ntro.mvc.controleurs.RecepteurCommandeMVC;
+import GO_APP.commandes.choisir_Qui_Es_Tu.ChoisirQuiEsTu;
+import GO_APP.commandes.choisir_Qui_Es_Tu.ChoisirQuiEsTuRecue;
+import GO_APP.commandes.choisir_Taille_Table.ChoisirTailleTable;
+import GO_APP.commandes.choisir_Taille_Table.ChoisirTailleTableRecue;
+import Go.enumerations.Couleur;
+import Go.enumerations.TailleTable;
 
 public class   ControleurParametres 
        extends ControleurModeleVue<ParametresLectureSeule, 
@@ -30,6 +38,32 @@ public class   ControleurParametres
 	@Override
 	protected void installerReceptionCommandes() {
 		J.appel(this);
+		//Qui es tu passe ps ms taille marche
+		/*installerRecepteurCommande(ChoisirQuiEsTu.class, new RecepteurCommandeMVC<ChoisirQuiEsTuRecue>() {
+			@Override
+			public void executerCommandeMVC(ChoisirQuiEsTuRecue commande) {
+				J.appel(this);
+				
+				Couleur quiEsTu = commande.getCouleur();
+
+				DoitEtre.nonNul(quiEsTu);
+
+				getModele().choisirQuiEsTu(quiEsTu);
+			}
+		});*/
+		
+		installerRecepteurCommande(ChoisirTailleTable.class, new RecepteurCommandeMVC<ChoisirTailleTableRecue>() {
+			@Override
+			public void executerCommandeMVC(ChoisirTailleTableRecue commande) {
+				J.appel(this);
+				
+				TailleTable tailleTable = commande.getTailleTable();
+				
+				DoitEtre.nonNul(tailleTable);
+				
+				getModele().choisirTailleTable(tailleTable);
+			}
+		});
 	}
 
 	@Override

@@ -1,5 +1,9 @@
-package commandes.choisir_Taille_Table;
+package GO_APP.commandes.choisir_Taille_Table;
 
-public interface ChoisirTailleTableRecue {
+import ntro.commandes.CommandeRecue;
+import Go.enumerations.TailleTable;
 
+public interface ChoisirTailleTableRecue extends CommandeRecue {
+	
+	TailleTable getTailleTable();
 }

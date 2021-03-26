@@ -1,20 +1,3 @@
-// Copyright (C) (2020) (Mathieu Bergeron) (mathieu.bergeron@cmontmorency.qc.ca)
-//
-// This file is part of tutoriels4f5
-//
-// tutoriels4f5 is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// tutoriels4f5 is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Affero General Public License for more details.
-//
-// You should have received a copy of the GNU Affero General Public License
-// along with aquiletour.  If not, see <https://www.gnu.org/licenses/>
-
 package GO_APP.pages.parametres;
 
 import java.net.URL;
@@ -22,16 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import ntro.commandes.FabriqueCommande;
 import ntro.debogage.DoitEtre;
 import ntro.debogage.J;
 import ntro.mvc.Vue;
+import GO_APP.commandes.choisir_Qui_Es_Tu.ChoisirQuiEsTu;
+import GO_APP.commandes.choisir_Qui_Es_Tu.ChoisirQuiEsTuPourEnvoi;
+import GO_APP.commandes.choisir_Taille_Table.ChoisirTailleTablePourEnvoi;
+import GO_APP.commandes.choisir_Taille_Table.ChoisirTailleTable;
 
 import Go.enumerations.Couleur;
 import Go.enumerations.TailleTable;
-import Go.Constantes; //Pour la grandeur du tableau
-
-import GO_APP.commandes.choisir_Qui_Es_Tu.*;
-import GO_APP.commandes.choisir_Taille_Table.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -44,32 +28,28 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 
-public class VueParametres implements Vue, Initializable {
 
+public class VueParametres implements Vue, Initializable {
+	
 	private ChoisirQuiEsTuPourEnvoi choisirQuiEsTu;
 	private ChoisirTailleTablePourEnvoi choisirTailleTable;
-	
-	
-	@FXML
-	private Button caseNOIR, caseBLANC, boutonOk;
 
+	@FXML 
+	private Button caseNOIR, caseBLANC, boutonOk;
+	
 	@FXML
 	private CheckBox checkNOIR, checkBLANC;
 
-	// private FermerParametresPourEnvoi fermerParamatres;
-	// private ChoisirTailleGrillePourEnvoi choisirTailleGrille;
-
 	@FXML
 	private ComboBox<String> choixTaille;
-
+	
 	private Map<String, TailleTable> tailleSelonNom = new HashMap<>();
 	private Map<TailleTable, String> nomSelonTaille = new HashMap<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		J.appel(this);
-
+		
 		DoitEtre.nonNul(caseNOIR);
 		DoitEtre.nonNul(caseBLANC);
 		DoitEtre.nonNul(checkNOIR);
@@ -78,44 +58,71 @@ public class VueParametres implements Vue, Initializable {
 
 		caseNOIR.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		caseBLANC.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-
+		
 		initialiserChoixTaille(resources);
 	}
 
 	private void initialiserChoixTaille(ResourceBundle resources) {
 		J.appel(this);
 
-		for (TailleTable tailleGrille : TailleTable.values()) {
-
-			String nomTaille = tailleGrille.name();
-
+		for(TailleTable tailleTable : TailleTable.values()) {
+			
+			String nomTaille = tailleTable.name();
+			
 			choixTaille.getItems().add(nomTaille);
-
-			tailleSelonNom.put(nomTaille, tailleGrille);
-			nomSelonTaille.put(tailleGrille, nomTaille);
+			
+			tailleSelonNom.put(nomTaille, tailleTable);
+			nomSelonTaille.put(tailleTable, nomTaille);
 		}
-
 		choixTaille.getSelectionModel().clearAndSelect(0);
 	}
 
 	@Override
 	public void obtenirCommandesPourEnvoi() {
 		J.appel(this);
+		
+		choisirQuiEsTu = FabriqueCommande.obtenirCommandePourEnvoi(ChoisirQuiEsTu.class);
+		choisirTailleTable = FabriqueCommande.obtenirCommandePourEnvoi(ChoisirTailleTable.class);
 	}
 
 	@Override
 	public void installerCapteursEvenementsUsager() {
 		J.appel(this);
 		
-		checkRouge.setOnAction(new EventHandler<ActionEvent>() {
+		checkNOIR.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				J.appel(this);
 				
-				choisirQuiCommence.setCouleur(Couleur.ROUGE);
-				choisirQuiCommence.envoyerCommande();
+				choisirQuiEsTu.setCouleur(Couleur.NOIR);
+				choisirQuiEsTu.envoyerCommande();
 			}
 		});
+		
+		checkBLANC.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				J.appel(this);
+
+				choisirQuiEsTu.setCouleur(Couleur.BLANC);
+				choisirQuiEsTu.envoyerCommande();
+			}
+		});
+
+		choixTaille.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				J.appel(this);
+				
+				String nomTailleChoisie = choixTaille.getSelectionModel().getSelectedItem();
+				
+				TailleTable tailleChoisie = tailleSelonNom.get(nomTailleChoisie);
+				
+				choisirTailleTable.setTailleTable(tailleChoisie);
+				choisirTailleTable.envoyerCommande();
+			}
+		});	
+	}
 
 	@Override
 	public void verifierCommandesPossibles() {
@@ -124,11 +131,11 @@ public class VueParametres implements Vue, Initializable {
 
 	public void afficherQuiEsTu(Couleur couleur) {
 		J.appel(this);
-
+		
 		DoitEtre.nonNul(couleur);
 
-		switch (couleur) {
-
+		switch(couleur) {
+		
 		case NOIR:
 			checkNOIR.setSelected(true);
 			checkBLANC.setSelected(false);
@@ -143,12 +150,12 @@ public class VueParametres implements Vue, Initializable {
 
 	public void afficherTailleTable(TailleTable tailleTable) {
 		J.appel(this);
-
+		
 		String nomTaille = nomSelonTaille.get(tailleTable);
-
+		
 		int indiceTaille = choixTaille.getItems().indexOf(nomTaille);
-
-		if (indiceTaille != -1) {
+		
+		if(indiceTaille != -1) {
 			choixTaille.getSelectionModel().clearAndSelect(indiceTaille);
 		}
 	}

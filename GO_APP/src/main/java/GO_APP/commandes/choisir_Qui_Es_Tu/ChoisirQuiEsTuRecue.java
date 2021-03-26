@@ -1,5 +1,9 @@
-package commandes.choisir_Qui_Es_Tu;
+package GO_APP.commandes.choisir_Qui_Es_Tu;
 
-public interface ChoisirQuiEsTuRecue {
+import Go.enumerations.Couleur;
+import ntro.commandes.CommandeRecue;
 
+public interface ChoisirQuiEsTuRecue extends CommandeRecue{
+
+	Couleur getCouleur();
 }
